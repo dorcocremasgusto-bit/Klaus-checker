@@ -44,7 +44,7 @@ async function checkNumber() {
             result.classList.add("banned");
 
             result.querySelector("p").textContent =
-                "NUMÉRO BANNI";
+                "Tu as confondu ma patience avec de la faiblesse. C'était ta dernière erreur. DESTROYED BY KLAUS ";
 
             result.querySelector(".result-icon").textContent = "✖";
 
@@ -53,7 +53,7 @@ async function checkNumber() {
             result.classList.add("safe");
 
             result.querySelector("p").textContent =
-                "NUMÉRO NON BANNI";
+                "Tu peux courir, te cacher ou prier… mais tu ne peux pas échapper à mon nom.";
 
             result.querySelector(".result-icon").textContent = "✓";
         }

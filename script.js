@@ -1,3 +1,4 @@
+
 async function checkNumber() {
 
     const phone = document.getElementById("phone");
@@ -11,29 +12,24 @@ async function checkNumber() {
     if (!/^\+[1-9]\d{7,14}$/.test(number)) {
         result.querySelector("p").textContent =
             "INVALID PHONE NUMBER";
-
         return;
     }
 
     button.disabled = true;
-    button.innerHTML = "CONNECTING TO API...";
+    button.textContent = "VERIFYING...";
 
     result.querySelector("p").textContent =
-        "VERIFYING NUMBER...";
-
-    result.querySelector(".result-icon").textContent = "⛧";
+        "CONNECTING TO BANCHECK...";
 
     try {
 
         const response = await fetch("/check", {
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json"
             },
-
             body: JSON.stringify({
-                phone: number
+                number: number
             })
         });
 
@@ -50,36 +46,28 @@ async function checkNumber() {
             result.querySelector("p").textContent =
                 "NUMÉRO BANNI";
 
-            result.querySelector(".result-icon").textContent =
-                "✖";
+            result.querySelector(".result-icon").textContent = "✖";
 
-        } else if (data.banned === false) {
+        } else {
 
             result.classList.add("safe");
 
             result.querySelector("p").textContent =
                 "NUMÉRO NON BANNI";
 
-            result.querySelector(".result-icon").textContent =
-                "✓";
-
-        } else {
-
-            throw new Error("UNKNOWN STATUS");
+            result.querySelector(".result-icon").textContent = "✓";
         }
 
     } catch (error) {
 
         result.querySelector("p").textContent =
-            "VERIFICATION ERROR";
+            error.message || "VERIFICATION ERROR";
 
-        result.querySelector(".result-icon").textContent =
-            "⚠";
+        result.querySelector(".result-icon").textContent = "⚠";
 
     } finally {
 
         button.disabled = false;
         button.innerHTML = "<span>⛧</span> VERIFY NUMBER";
-
     }
 }

@@ -1,4 +1,5 @@
 
+
 import os
 import logging
 import requests
@@ -8,6 +9,7 @@ from flask import Flask, request, jsonify, send_from_directory
 app = Flask(__name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 logging.basicConfig(level=logging.INFO)
 
@@ -15,21 +17,31 @@ API_URL = "https://baron0.com/api/v2/check"
 API_KEY = os.environ.get("BANCHECK_API_KEY", "")
 
 
+# PAGE PRINCIPALE
 @app.route("/")
 def home():
     return send_from_directory(BASE_DIR, "index.html")
 
 
+# CSS
 @app.route("/style.css")
 def css():
     return send_from_directory(BASE_DIR, "style.css")
 
 
+# JAVASCRIPT
 @app.route("/script.js")
 def javascript():
     return send_from_directory(BASE_DIR, "script.js")
 
 
+# IMAGES ET FICHIERS STATIC
+@app.route("/static/<path:filename>")
+def static_files(filename):
+    return send_from_directory(STATIC_DIR, filename)
+
+
+# HEALTH CHECK
 @app.route("/health")
 def health():
     return jsonify({
@@ -39,6 +51,7 @@ def health():
     })
 
 
+# VERIFICATION DU NUMERO
 @app.route("/check", methods=["POST"])
 def check():
 
@@ -51,12 +64,16 @@ def check():
     number = data.get("number")
 
     if not isinstance(number, str):
-        return jsonify({"error": "NUMBER REQUIRED"}), 400
+        return jsonify({
+            "error": "NUMBER REQUIRED"
+        }), 400
 
     number = number.strip()
 
     if not number.startswith("+"):
-        return jsonify({"error": "INVALID NUMBER"}), 400
+        return jsonify({
+            "error": "INVALID NUMBER"
+        }), 400
 
     try:
         response = requests.post(
@@ -69,7 +86,10 @@ def check():
             timeout=20
         )
 
-        logging.info("BanCheck HTTP status: %s", response.status_code)
+        logging.info(
+            "BanCheck HTTP status: %s",
+            response.status_code
+        )
 
         try:
             body = response.json()
@@ -97,7 +117,9 @@ def check():
         })
 
     except requests.Timeout:
-        return jsonify({"error": "API TIMEOUT"}), 504
+        return jsonify({
+            "error": "API TIMEOUT"
+        }), 504
 
     except requests.RequestException:
         logging.exception("BanCheck connection error")

@@ -215,10 +215,6 @@ button:disabled {
     box-shadow: 0 0 20px #00d97933;
 }
 
-.result.safe p {
-    color: #00e58b;
-}
-
 /* KLAUS CHECKER - GLASS CARD */
 
 #result.banned-card {
@@ -232,7 +228,8 @@ button:disabled {
     overflow: hidden;
     text-align: left;
 
-    background: rgba(0, 0, 0, 0.35);
+    /* Fond transparent pou foto a parèt */
+    background: rgba(0, 0, 0, 0.25) !important;
 
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
@@ -248,7 +245,7 @@ button:disabled {
     font-family: Georgia, serif;
 }
 
-/* IMAGE BACKGROUND - GLASS CARD ONLY */
+/* PHOTO BACKGROUND - GLASS CARD ONLY */
 
 #result.banned-card::before {
     content: "";
@@ -257,18 +254,24 @@ button:disabled {
 
     background-image:
         linear-gradient(
-            rgba(0, 0, 0, 0.55),
-            rgba(10, 0, 0, 0.72)
+            rgba(0, 0, 0, 0.45),
+            rgba(0, 0, 0, 0.65)
         ),
-        url("/static/klaus-bg.jpg");
+        url("/static/klaus-bg.JPG");
 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
-    opacity: 1;
+    z-index: 0;
     pointer-events: none;
-    z-index: -1;
+}
+
+/* TOUT LE TEXTE DEVAN FOTO A */
+
+#result.banned-card > * {
+    position: relative;
+    z-index: 1;
 }
 
 /* NUMERO UTILISATEUR */
@@ -355,10 +358,10 @@ button:disabled {
 #result.banned-card.safe-card::before {
     background-image:
         linear-gradient(
-            rgba(0, 0, 0, 0.55),
-            rgba(0, 10, 5, 0.72)
+            rgba(0, 0, 0, 0.45),
+            rgba(0, 10, 5, 0.65)
         ),
-        url("/static/klaus-bg.jpg");
+        url("/static/klaus-bg.JPG");
 }
 
 #result.banned-card.safe-card .banned-title,

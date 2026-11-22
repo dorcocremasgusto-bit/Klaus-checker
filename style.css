@@ -219,12 +219,11 @@ button:disabled {
     color: #00e58b;
 }
 
-/* =================================
-   KLAUS CHECKER - GLASS BANNED CARD
-================================= */
+/* KLAUS CHECKER - GLASS CARD */
 
 #result.banned-card {
     position: relative;
+    isolation: isolate;
     width: 100%;
     max-width: 540px;
     min-height: 440px;
@@ -233,12 +232,7 @@ button:disabled {
     overflow: hidden;
     text-align: left;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(25, 0, 0, 0.58),
-            rgba(0, 0, 0, 0.76)
-        );
+    background: rgba(0, 0, 0, 0.35);
 
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
@@ -254,21 +248,27 @@ button:disabled {
     font-family: Georgia, serif;
 }
 
+/* IMAGE BACKGROUND - GLASS CARD ONLY */
+
 #result.banned-card::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(
-        circle at 50% 45%,
-        rgba(180, 0, 0, 0.18),
-        transparent 65%
-    );
-    pointer-events: none;
-}
 
-#result.banned-card > * {
-    position: relative;
-    z-index: 1;
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.55),
+            rgba(10, 0, 0, 0.72)
+        ),
+        url("/static/klaus-bg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    opacity: 1;
+    pointer-events: none;
+    z-index: -1;
 }
 
 /* NUMERO UTILISATEUR */
@@ -294,7 +294,7 @@ button:disabled {
     margin-bottom: 35px;
 }
 
-/* TITRE DU MESSAGE */
+/* TITRE */
 
 #result .banned-title {
     font-family: Georgia, serif;
@@ -306,7 +306,7 @@ button:disabled {
     margin-bottom: 25px;
 }
 
-/* MESSAGE DE BAN */
+/* MESSAGE */
 
 #result .banned-message {
     font-family: Georgia, serif;
@@ -340,6 +340,44 @@ button:disabled {
     font-weight: bold;
     color: #ff4545;
     letter-spacing: 1px;
+}
+
+/* NON BANNI - GREEN GLASS */
+
+#result.banned-card.safe-card {
+    border-color: rgba(0, 255, 150, 0.55);
+
+    box-shadow:
+        0 0 25px rgba(0, 255, 150, 0.12),
+        inset 0 0 25px rgba(255, 255, 255, 0.025);
+}
+
+#result.banned-card.safe-card::before {
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.55),
+            rgba(0, 10, 5, 0.72)
+        ),
+        url("/static/klaus-bg.jpg");
+}
+
+#result.banned-card.safe-card .banned-title,
+#result.banned-card.safe-card .banned-message,
+#result.banned-card.safe-card .banned-signature {
+    color: #00e58b;
+}
+
+#result.banned-card.safe-card .banned-decoration {
+    color: #00e58b;
+}
+
+#result.banned-card.safe-card .banned-line {
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(0, 255, 150, .8),
+        transparent
+    );
 }
 
 /* INFORMATIONS */
@@ -414,3 +452,4 @@ footer {
         padding: 24px 16px;
     }
 }
+

@@ -10,16 +10,20 @@ async function checkNumber() {
     result.className = "result";
 
     if (!/^\+[1-9]\d{7,14}$/.test(number)) {
-        result.querySelector("p").textContent =
-            "INVALID PHONE NUMBER";
+        result.innerHTML = `
+            <div class="result-icon">⚠</div>
+            <p>INVALID PHONE NUMBER</p>
+        `;
         return;
     }
 
     button.disabled = true;
     button.textContent = "VERIFYING...";
 
-    result.querySelector("p").textContent =
-        "CONNECTING TO BANCHECK...";
+    result.innerHTML = `
+        <div class="result-icon">⏳</div>
+        <p>CONNECTING TO BANCHECK...</p>
+    `;
 
     try {
 
@@ -28,9 +32,7 @@ async function checkNumber() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                number: number
-            })
+            body: JSON.stringify({ number: number })
         });
 
         const data = await response.json();
@@ -39,31 +41,56 @@ async function checkNumber() {
             throw new Error(data.error || "API ERROR");
         }
 
-        if (data.banned === true) {
+        const isBanned = data.banned === true;
 
-            result.classList.add("banned");
+        // MENM KAT GLASS POU TOUDE REZILTA YO
+        result.className = isBanned
+            ? "banned-card"
+            : "banned-card safe-card";
 
-            result.querySelector("p").textContent =
-                "Tu as confondu ma patience avec de la faiblesse. C'était ta dernière erreur. DESTROYED BY KLAUS ";
+        result.innerHTML = `
+            <span class="banned-number"></span>
 
-            result.querySelector(".result-icon").textContent = "✖";
+            <div class="banned-decoration">
+                ✥ 🔴 ✥
+            </div>
 
-        } else {
+            <div class="banned-title"></div>
 
-            result.classList.add("safe");
+            <div class="banned-message"></div>
 
-            result.querySelector("p").textContent =
-                "Tu peux courir, te cacher ou prier… mais tu ne peux pas échapper à mon nom.";
+            <div class="banned-line"></div>
 
-            result.querySelector(".result-icon").textContent = "✓";
-        }
+            <div class="banned-signature">
+                🔴 SIGNÉ : KLAUS CHECKER
+            </div>
+        `;
+
+        // Nimewo itilizatè a
+        result.querySelector(".banned-number").textContent = number;
+
+        // Mesaj selon rezilta API a
+        result.querySelector(".banned-title").textContent =
+            isBanned ? "BANNI PAR KLAUS" ;
+
+        result.querySelector(".banned-message").textContent =
+            isBanned ? "Tu as confondu ma patience avec de la faiblesse. C'était ta dernière erreur. DESTROYED BY KLAUS" ;
+
+        // Dekorasyon selon rezilta
+        result.querySelector(".banned-decoration").textContent =
+            isBanned ? "✥ 🔴 ✥" : "✥ ✓ ✥";
 
     } catch (error) {
 
+        result.className = "result";
+
+        result.innerHTML = `
+            <div class="result-icon">⚠</div>
+            <p></p>
+        `;
+
         result.querySelector("p").textContent =
             error.message || "VERIFICATION ERROR";
-
-        result.querySelector(".result-icon").textContent = "⚠";
 
     } finally {
 

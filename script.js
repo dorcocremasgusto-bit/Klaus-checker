@@ -1,4 +1,4 @@
-
+    
 async function checkNumber() {
 
     const phone = document.getElementById("phone");
@@ -43,7 +43,7 @@ async function checkNumber() {
 
         const isBanned = data.banned === true;
 
-        // MENM KAT GLASS POU TOUDE REZILTA YO
+        // MENM GLASS CARD POU TOUDE REZILTA YO
         result.className = isBanned
             ? "banned-card"
             : "banned-card safe-card";
@@ -51,9 +51,7 @@ async function checkNumber() {
         result.innerHTML = `
             <span class="banned-number"></span>
 
-            <div class="banned-decoration">
-                ✥ 🔴 ✥
-            </div>
+            <div class="banned-decoration"></div>
 
             <div class="banned-title"></div>
 
@@ -66,17 +64,20 @@ async function checkNumber() {
             </div>
         `;
 
-        // Nimewo itilizatè a
+        // AFFICHE LE NUMERO
         result.querySelector(".banned-number").textContent = number;
 
-        // Mesaj selon rezilta API a
+        // AFFICHE LE STATUT
         result.querySelector(".banned-title").textContent =
-            isBanned ? "BANNI PAR KLAUS" ;
+            isBanned ? "BANNI" : "NON BANNI";
 
+        // AFFICHE LE MESSAGE
         result.querySelector(".banned-message").textContent =
-            isBanned ? "Tu as confondu ma patience avec de la faiblesse. C'était ta dernière erreur. DESTROYED BY KLAUS" ;
+            isBanned
+            ? "Banni par Klaus"
+            : "Numéro fiable online";
 
-        // Dekorasyon selon rezilta
+        // DECORATION
         result.querySelector(".banned-decoration").textContent =
             isBanned ? "✥ 🔴 ✥" : "✥ ✓ ✥";
 

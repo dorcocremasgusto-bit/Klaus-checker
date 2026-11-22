@@ -45,7 +45,7 @@ def static_files(filename):
 # HEALTH CHECK
 @app.route("/health")
 def health():
-    image_path = os.path.join(STATIC_DIR, "klaus-bg.JPG")
+    image_path = os.path.join(STATIC_DIR, "IMG_4979.jpeg")
 
     return jsonify({
         "status": "online",

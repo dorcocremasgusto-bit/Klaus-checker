@@ -74,8 +74,8 @@ async function checkNumber() {
         // AFFICHE LE MESSAGE
         result.querySelector(".banned-message").textContent =
             isBanned
-            ? "Banni par Klaus"
-            : "Numéro fiable online";
+            ? "Tu as confondu ma patience avec de la faiblesse. C'était ta dernière erreur. DESTROYED BY KLAUS "
+            : "Tu peux courir, te cacher ou prier… mais tu ne peux pas échapper à mon nom.";
 
         // DECORATION
         result.querySelector(".banned-decoration").textContent =

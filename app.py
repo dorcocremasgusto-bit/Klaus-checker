@@ -45,10 +45,14 @@ def static_files(filename):
 # HEALTH CHECK
 @app.route("/health")
 def health():
+    image_path = os.path.join(STATIC_DIR, "klaus-bg.JPG")
+
     return jsonify({
         "status": "online",
-        "application": "KLAUS CHECKER",
-        "api_configured": bool(API_KEY)
+        "static_folder_exists": os.path.isdir(STATIC_DIR),
+        "image_exists": os.path.isfile(image_path),
+        "static_files": os.listdir(STATIC_DIR)
+            if os.path.isdir(STATIC_DIR) else []
     })
 
 

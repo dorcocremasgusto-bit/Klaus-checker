@@ -218,6 +218,8 @@ button:disabled {
 
 /* KLAUS CHECKER - GLASS CARD */
 
+/* SAME BACKGROUND FOR BANNED AND NON-BANNED */
+
 #result.banned-card {
     position: relative;
     isolation: isolate;
@@ -229,14 +231,12 @@ button:disabled {
     overflow: hidden;
     text-align: left;
 
-    /* BACKGROUND IMAGE DIRECT */
-
     background-image:
         linear-gradient(
             rgba(0, 0, 0, 0.40),
             rgba(0, 0, 0, 0.65)
         ),
-        url("/static/klaus-bg.JPG") !important;
+        url("/static/IMG_4979.jpeg") !important;
 
     background-size: cover !important;
     background-position: center !important;
@@ -329,6 +329,7 @@ button:disabled {
 }
 
 /* NON BANNI - GREEN GLASS */
+/* IMAGE REMAINS THE SAME */
 
 #result.banned-card.safe-card {
     border-color: rgba(0, 255, 150, 0.55);

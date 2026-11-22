@@ -1,18 +1,19 @@
 
-
 import os
 import logging
 import requests
 
 from flask import Flask, request, jsonify, send_from_directory
 
-app = Flask(__name__)
+# CONFIGURATION FLASK
+app = Flask(__name__, static_folder=None)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 logging.basicConfig(level=logging.INFO)
 
+# BANCHECK API
 API_URL = "https://baron0.com/api/v2/check"
 API_KEY = os.environ.get("BANCHECK_API_KEY", "")
 
@@ -35,7 +36,7 @@ def javascript():
     return send_from_directory(BASE_DIR, "script.js")
 
 
-# IMAGES ET FICHIERS STATIC
+# STATIC FILES: IMAGES
 @app.route("/static/<path:filename>")
 def static_files(filename):
     return send_from_directory(STATIC_DIR, filename)
@@ -51,7 +52,7 @@ def health():
     })
 
 
-# VERIFICATION DU NUMERO
+# CHECK PHONE NUMBER
 @app.route("/check", methods=["POST"])
 def check():
 
@@ -123,13 +124,18 @@ def check():
 
     except requests.RequestException:
         logging.exception("BanCheck connection error")
+
         return jsonify({
             "error": "API CONNECTION ERROR"
         }), 502
 
 
+# START SERVER
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
         port=int(os.environ.get("PORT", 10000))
     )
+
+
+
